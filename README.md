@@ -14,6 +14,10 @@ settings.json
 - dump_size, amount of packets you would like to capture when attack is detected.
 
 ``
+soon to be added
+``
+- Webhook alerts, only problem with this is some servers won't be able to send the webhook request when it's being hit 
+
 example
 ``
 sent a small attack with udp method
