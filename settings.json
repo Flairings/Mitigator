@@ -1,0 +1,8 @@
+{
+  "interface": "eth0",
+  "directory": "/home/defaultuser/capture/dumps/",
+  "threshold": 2000,
+  "checks": 3,
+  "sleep_time": 60,
+  "dump_size": 10000
+}
