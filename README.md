@@ -3,6 +3,8 @@ Capture
 ``
 - uses /proc/net/dev to detect incoming ddos attacks.
 
+- currently uses UFW (fucking stinky. i know.)
+
 ``
 settings.json
 ``
@@ -12,6 +14,7 @@ settings.json
 - checks, amount of time to check /proc/net/dev to trigger pps detection.
 - sleep_time, amount of time to wait after capturing an attack.
 - dump_size, amount of packets you would like to capture when attack is detected.
+- whitelist, whitelisted ips to not be blocked on mitigation
 
 ``
 soon to be added
@@ -22,8 +25,12 @@ soon to be added
 example
 ``
 
+
+ 
+ 
 - sent a small attack with udp method
 
 https://user-images.githubusercontent.com/58793605/132091994-cb92580e-ac59-4f41-9d27-0bad34f35c4e.mp4
 
+^ outdated as fuck ill fix when i can be asked
 
