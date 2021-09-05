@@ -34,7 +34,6 @@ async def mitigation(message):
     print("   " + Fore.LIGHTWHITE_EX + datetime.datetime.now().strftime("%H:%M:%S") + " │ [38;2;255;166;0m[[38;2;255;173;21mM[38;2;255;180;42mI[38;2;255;187;63mT[38;2;255;194;84mI[38;2;255;201;105mG[38;2;255;208;126mA[38;2;255;215;147mT[38;2;255;222;168mI[38;2;255;229;189mO[38;2;255;236;210mN[38;2;255;243;231m][0;00m" + Fore.LIGHTWHITE_EX + " | " + message)
 
 async def main():
-    # check if dump file exist
     if os.path.isdir(settings['directory']):
         pass
     else:
@@ -53,8 +52,7 @@ async def main():
             await asyncio.sleep(1)
             exit(0)
 
-# [38;2;73;204;255mC[38;2;99;211;255ma[38;2;125;218;255mp[38;2;151;225;255mt[38;2;177;232;255mu[38;2;203;239;255mr[38;2;229;246;255me[0;00m
-    await clear() # [38;2;73;204;255mM[38;2;93;209;255mi[38;2;113;214;255mt[38;2;133;219;255mi[38;2;153;224;255mg[38;2;173;229;255ma[38;2;193;234;255mt[38;2;213;239;255mo[38;2;233;244;255mr[0;00m
+    await clear()
     print(f"""
         [38;2;73;204;255m│ [38;2;73;204;255mM[38;2;93;209;255mi[38;2;113;214;255mt[38;2;133;219;255mi[38;2;153;224;255mg[38;2;173;229;255ma[38;2;193;234;255mt[38;2;213;239;255mo[38;2;233;244;255mr[0;00m
         [38;2;103;212;255m│
@@ -114,12 +112,12 @@ async def mitigate(): # fbi#0001 helped with the netstat commands <3
         os.system(f"netstat -tn 2>/dev/null | grep :{settings['ssh_port']}" + "| awk '{print $5}' | cut -d: -f1 | sort | uniq | sort -nr >> temp_log.txt")
     os.system("sudo cat temp_log.txt | sort | uniq | sort -nr > logs.txt")
     logs = open('logs.txt', 'r')
+    start = time.time()
     for line in logs:
         if line.strip() in settings['whitelist']:
             await mitigation(f"{line.strip()} is whitelisted.")
             pass
         else:
-        # ipset doesnt actually block ips need to change to UFW or IPTABLES.
             process = subprocess.Popen([f"sudo ufw insert 1 deny from {line.strip()} to any"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             stdout, stderr = process.communicate()
             stderr = f"{stderr}"
@@ -131,17 +129,15 @@ async def mitigate(): # fbi#0001 helped with the netstat commands <3
                 await mitigation(f"{line.strip()} has been blacklisted.")
 
     if dropped > 0:
-        await mitigation(f"Successfully blacklisted {dropped} IPs.")
+        await mitigation(f"Successfully blacklisted {dropped} IPs in {round(time.time() - start, 2)} seconds.")
         dropped = 0
     else:
         dropped = 0
         await mitigation("Unable to drop any IPs, perhaps the method isn't TCP based.")
 
 async def capture():
-    # switch to os.system
     process = subprocess.Popen(f"sudo tcpdump -i {settings['interface']} -t -w {file} -c {settings['dump_size']}", shell=True, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, close_fds=True)
     out,err = process.communicate()
-   # print(process)
 
 if __name__ == '__main__':
     if platform == "linux" or platform == "linux2":
