@@ -1,8 +1,10 @@
 {
   "interface": "eth0",
+  "ssh_port": 22,
   "directory": "/home/defaultuser/capture/dumps/",
   "threshold": 2000,
   "checks": 3,
   "sleep_time": 60,
-  "dump_size": 10000
+  "dump_size": 10000,
+  "whitelist": ["1.1.1.1"]
 }
