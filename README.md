@@ -1,3 +1,5 @@
+FIX ASCII ERROR: export PYTHONIOENCODING=UTF-8
+
 ``
 Capture
 ``
