@@ -5,6 +5,13 @@ Capture
 
 - currently uses UFW (fucking stinky. i know.)
 
+- don't use this tool if you have an iq below 10
+
+``
+weird shit
+``
+- when script is screened all the colors die...? idk why
+
 ``
 settings.json
 ``

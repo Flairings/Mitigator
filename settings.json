@@ -1,8 +1,9 @@
 {
   "interface": "eth0",
-  "ssh_port": 22,
-  "directory": "/home/defaultuser/capture/dumps/",
-  "threshold": 2000,
+  "port": 22,
+  "directory": "/home/flairings/Projects/Mitigation/dumps/",
+  "pps_threshold": 2000,
+  "mbps_threshold": 150,
   "checks": 3,
   "sleep_time": 60,
   "dump_size": 10000,
