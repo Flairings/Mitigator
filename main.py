@@ -56,6 +56,7 @@ async def main():
             await asyncio.sleep(1)
             exit(0)
 
+
     await clear()
     print(f"""
         [38;2;73;204;255m│ [38;2;73;204;255mM[38;2;93;209;255mi[38;2;113;214;255mt[38;2;133;219;255mi[38;2;153;224;255mg[38;2;173;229;255ma[38;2;193;234;255mt[38;2;213;239;255mo[38;2;233;244;255mr[0;00m
@@ -86,11 +87,9 @@ async def listen():
         pps = (int(pps_new)) - (int(pps_old))
 
         if pps > settings['pps_threshold'] and mbps > settings['mbps_threshold']:
-            print(mbps, pps)
             checks += 1
 
             if checks > settings['checks']:
-                print("detected", mbps, pps)
                 attack_detected = True
                 await detected(pps, mbps)
                 checks = 0
@@ -103,7 +102,7 @@ file = f"{settings['directory']}attack-{fixed_time_date}.pcap"
 
 async def detected(pps, mbps):
     await asyncio.sleep(2)
-    await detection(f"PPS & MBPS Threshold reached | [{pps}]pp/s, [{mbps}] mbit/s.")
+    await detection(f"PPS & MBPS Threshold reached | {pps} pp/s, {mbps} mbit/s.")
     await action(f"Capturing all incoming traffic...")
     await capture(pps, mbps)
     await asyncio.sleep(2)
@@ -118,7 +117,7 @@ dropped = 0
 
 async def mitigate():  # fbi#0001 helped with the netstat commands <3
     global dropped
-    await mitigation(f"Attempting to mitigate incoming tcp connections...")
+    await mitigation(f"Attempting to mitigate incoming tcp connections...") # reminder: probably should thread this
     os.system(f"netstat -tn 2>/dev/null | grep :{settings['port']}" + " | awk '{print $5}' | cut -d: -f1 | sort | uniq | sort -nr > temp_log.txt")
 
     for i in range(int(5)):
@@ -134,11 +133,11 @@ async def mitigate():  # fbi#0001 helped with the netstat commands <3
             await mitigation(f"{line.strip()} is whitelisted.")
             pass
         else:
-            process = subprocess.Popen([f"sudo ufw insert 1 deny from {line.strip()} to any"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            process = subprocess.Popen([f"ip route add blackhole {line.strip()}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             stdout, stderr = process.communicate()
             stderr = f"{stderr}"
 
-            if stderr.__contains__("Skipping inserting existing rule"):
+            if stderr.__contains__("File exists"):
                 await mitigation(f"{line.strip()} is already blacklisted.")
                 pass
             else:
@@ -156,7 +155,6 @@ async def mitigate():  # fbi#0001 helped with the netstat commands <3
 async def capture(pps, mbps):
     process = subprocess.Popen(f"sudo tcpdump -i {settings['interface']} -t -w {file} -c {settings['dump_size']}", shell=True, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, close_fds=True)
     out, err = process.communicate()
-
 
 if __name__ == '__main__':
     if platform == "linux" or platform == "linux2":
