@@ -1,6 +1,13 @@
 
+
+## if you use all i ask is you star the repository.
+
+# NOTE: This does not fully prevent DDoS attacks. do not come whining to me when your server gets slammed
+
+requirements;
 apt install net-tools
 
+pip install -r requirements.txt
 ``
 Capture
 ``
