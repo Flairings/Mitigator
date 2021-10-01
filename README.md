@@ -1,11 +1,12 @@
-FIX ASCII ERROR: export PYTHONIOENCODING=UTF-8
+
+apt install net-tools
 
 ``
 Capture
 ``
 - uses /proc/net/dev to detect incoming ddos attacks.
 
-- currently uses UFW (fucking stinky. i know.)
+- uses linux's built in IP handler
 
 - don't use this tool if you have an iq below 10
 
@@ -33,13 +34,8 @@ soon to be added
 ``
 example
 ``
-
-
  
  
 - sent a small attack with udp method
 
-https://user-images.githubusercontent.com/58793605/132091994-cb92580e-ac59-4f41-9d27-0bad34f35c4e.mp4
-
-^ outdated as fuck ill fix when i can be asked
-
+https://gyazo.com/b59d56cf7033db235a1e3840a7193e77
