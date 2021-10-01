@@ -1,11 +1,11 @@
 {
   "interface": "eth0",
   "port": 22,
-  "directory": "/home/flairings/Projects/Mitigation/dumps/",
+  "directory": "/home/username/attacks/",
   "pps_threshold": 2000,
-  "mbps_threshold": 150,
+  "mbps_threshold": 5,
   "checks": 3,
-  "sleep_time": 60,
-  "dump_size": 10000,
-  "whitelist": ["1.1.1.1"]
+  "sleep_time": 5,
+  "dump_size": 1000,
+  "whitelist": ["Your ip here", "another ip here if you want"]
 }
