@@ -56,10 +56,9 @@ async def main():
             await asyncio.sleep(1)
             exit(0)
 
-
     await clear()
     print(f"""
-        [38;2;73;204;255m│ [38;2;73;204;255mM[38;2;93;209;255mi[38;2;113;214;255mt[38;2;133;219;255mi[38;2;153;224;255mg[38;2;173;229;255ma[38;2;193;234;255mt[38;2;213;239;255mo[38;2;233;244;255mr[0;00m
+        [38;2;73;204;255m│ [38;2;73;204;255mM[38;2;93;209;255mi[38;2;113;214;255mt[38;2;133;219;255mi[38;2;153;224;255mg[38;2;173;229;255ma[38;2;193;234;255mt[38;2;213;239;255mo[38;2;233;244;255mr[0;00m 1.2
         [38;2;103;212;255m│
         [38;2;133;220;255m│  {Fore.WHITE}Efficiently capture & mitigate DDoS attacks in real-time.
         [38;2;193;236;255m│  {Fore.WHITE}Developers, Flairings.
@@ -161,6 +160,7 @@ if __name__ == '__main__':
         if os.geteuid() != 0:
             exit("You need to have root privileges to run this script.\nPlease try again, this time using 'sudo'. Exiting.")
         else:
+            os.system("export PYTHONIOENCODING=UTF-8")
             try:
                 init()
                 loop = asyncio.get_event_loop()
